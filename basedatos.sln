@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.4
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "basedatos", "basedatos\basedatos.vbproj", "{3473F3BF-E0FF-42ED-8F1D-27ED7FE38FAB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3473F3BF-E0FF-42ED-8F1D-27ED7FE38FAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3473F3BF-E0FF-42ED-8F1D-27ED7FE38FAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3473F3BF-E0FF-42ED-8F1D-27ED7FE38FAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3473F3BF-E0FF-42ED-8F1D-27ED7FE38FAB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
