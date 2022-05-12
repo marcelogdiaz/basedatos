@@ -7,12 +7,12 @@
     Public miNombreEquipo As String = Environment.MachineName
     Public instanciaSQL As String = "\SQLEXPRESS"
     ''' <summary>
-    ''' Nombre del "Data Source" a usar en la conexion a BD SAR. Por defecto es local a la PC, puede cambiarse mediante entrada en @archivoINI
+    ''' Nombre del "Data Source" a usar en la conexion a BD. Por defecto es local a la PC, puede cambiarse mediante entrada en @archivoINI
     ''' </summary>
     Public ServidorSQL As String = miNombreEquipo + instanciaSQL
 
     ''credenciales POR DEFECTO 
-    Public userSQLRemoto As String = "SA"
+    Public userSQLRemoto As String = ""
     Public passwordSQLRemoto As String = ""
 
     Public Sub inicializarGestorBD(nombreBaseDatos As String, ByVal user As String, ByVal pwd As String)
