@@ -17,8 +17,6 @@ Public Class BD_SQL
         Dim cant_puntos As Integer
         Dim parametros As String() = valor_dsn.Split(";")
 
-        Dim userid As String() = parametros(0).Split("=")
-        Dim password As String() = parametros(1).Split("=")
         Dim catalog As String() = parametros(2).Split("=")
 
         Try
@@ -31,7 +29,8 @@ Public Class BD_SQL
                 conec.ConnectionString = "Server=" + Servidor + ";" + "Initial Catalog=" + catalog(1) + "; User ID=" + userSQLRemoto + ";Password=" + passwordSQLRemoto + "; MultipleActiveResultSets=true;"
             Else
                 'SERVIDOR LOCAL
-                conec.ConnectionString = "Data Source=" + Servidor + ";" + "Initial Catalog=" + catalog(1) + "; Integrated Security=true; MultipleActiveResultSets=true;"
+                'conec.ConnectionString = "Data Source=" + Servidor + ";" + "Initial Catalog=" + catalog(1) + "; Integrated Security=true; MultipleActiveResultSets=true;"
+                conec.ConnectionString = "Data Source=" + Servidor + ";" + "Initial Catalog=" + catalog(1) + "; User ID=" + userSQLRemoto + ";Password=" + passwordSQLRemoto + "; MultipleActiveResultSets=true;"
             End If
 
             'Log.Info("DB CONN" + conec.ConnectionString)
