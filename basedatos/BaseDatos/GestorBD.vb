@@ -15,7 +15,7 @@
     Public userSQLRemoto As String = ""
     Public passwordSQLRemoto As String = ""
 
-    Public Sub inicializarGestorBD(nombreBaseDatos As String, ByVal user As String, ByVal pwd As String)
+    Public Sub inicializarGestorBD(nombreBaseDatos As String, ByVal user As String, ByVal pwd As String, Optional serverIpAndInstance As String = "")
         'BaseDatosF = New BD_RDO_Factory
         BaseDatosF = New BD_SQL_Factory
         bd = BaseDatosF.crear_base_datos()
@@ -24,6 +24,9 @@
         ''actualizamos las credenciales de conexion
         userSQLRemoto = user
         passwordSQLRemoto = pwd
+        If serverIpAndInstance <> "" Then
+            ServidorSQL = serverIpAndInstance
+        End If
     End Sub
 
     Public Function ejecutar(texto_sql As String) As Collection
