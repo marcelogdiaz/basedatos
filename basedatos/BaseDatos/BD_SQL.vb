@@ -10,7 +10,7 @@ Public Class BD_SQL
     Private resultados As Collection
     Private puntero_resultados As Integer
 
-    Public Sub Conectar(ByVal valor_dsn As String, Servidor As String, Optional propagar As Boolean = False) Implements IBaseDatos.Conectar
+    Public Sub Conectar(ByVal valor_dsn As String, Servidor As String) Implements IBaseDatos.Conectar
 
         'Desconectamos automaticamente para evitar errores
         Desconectar()
@@ -19,8 +19,8 @@ Public Class BD_SQL
 
         Dim catalog As String() = parametros(2).Split("=")
 
-        Try
-            dsn = valor_dsn
+        'Try
+        dsn = valor_dsn
             'Determinamos si la conexion es LOCAL o REMOTA, esto lo inferimos del valor de "SERVIDOR"
             cant_puntos = Servidor.Split(".").Length - 1
 
@@ -37,20 +37,14 @@ Public Class BD_SQL
             conec.Open()
             mensaje_db = "Se establecio la conexion con " + valor_dsn
             ''log.Info(mensaje_db)
-        Catch ex As SqlException
-            mensaje_db = "ERROR EN LA CONEXION CON LA BASE DE DATOS: " + Servidor
-            'Log.Error("DB CONN" + conec.ConnectionString)
-            'Log.Error(mensaje_db + " - " + valor_dsn + " - " + ex.Message)
-
-            If propagar Then
-                Throw ex
-            Else
-                'MessageBox.Show(mensaje_db)
-            End If
-        End Try
+        'Catch ex As SqlException
+        '    mensaje_db = "ERROR EN LA CONEXION CON LA BASE DE DATOS: " + Servidor
+        '    Log.Error("DB CONN" + conec.ConnectionString)
+        '    Log.Error(mensaje_db + " - " + valor_dsn + " - " + ex.Message)
+        'End Try
     End Sub
 
-    Public Sub Consultar(sql As String, Optional tipo As CommandType = CommandType.Text, Optional parametros As List(Of SqlParameter) = Nothing, Optional propagar As Boolean = False) Implements IBaseDatos.Consultar
+    Public Sub Consultar(sql As String, Optional tipo As CommandType = CommandType.Text, Optional parametros As List(Of SqlParameter) = Nothing) Implements IBaseDatos.Consultar
         Dim SP As SqlCommand
 
         'inicializamos la varialble para no retornar valores de otra consulta
@@ -58,50 +52,50 @@ Public Class BD_SQL
         Dim registro As Collection
 
         puntero_resultados = 1
-        Try
-            SP = conec.CreateCommand()
-            SP.CommandType = tipo
-            SP.CommandText = sql
+        'Try
+        SP = conec.CreateCommand()
+        SP.CommandType = tipo
+        SP.CommandText = sql
 
-            ''preguntamos si es STORED PROCEDURES, agregamos los parametros
-            If (tipo.Equals(CommandType.StoredProcedure)) Then
-                'consulta STORED PROCEDURE, recorremos los parametros y agregamos
-                SP.Parameters.AddRange(parametros.ToArray())
-            End If
+        ''preguntamos si es STORED PROCEDURES, agregamos los parametros
+        If (tipo.Equals(CommandType.StoredProcedure)) Then
+            'consulta STORED PROCEDURE, recorremos los parametros y agregamos
+            SP.Parameters.AddRange(parametros.ToArray())
+        End If
 
-            reader = SP.ExecuteReader
+        reader = SP.ExecuteReader
 
-            Do While reader.Read()
+        Do While reader.Read()
 
-                Dim registro_actual(reader.FieldCount - 1) As Object
-                Dim cantidad_campos As Integer = reader.GetValues(registro_actual)
-                registro = New Collection
+            Dim registro_actual(reader.FieldCount - 1) As Object
+            Dim cantidad_campos As Integer = reader.GetValues(registro_actual)
+            registro = New Collection
 
-                'Console.WriteLine("reader.GetValues retrieved {0} columns.", fieldCount)
-                For i As Integer = 0 To cantidad_campos - 1
-                    registro.Add(New KeyValuePair(Of String, Object)(reader.GetName(i), registro_actual(i)))
-                    'Console.Write(values(i).ToString + " - ")
-                Next
-                resultados.Add(registro)
-                'Console.WriteLine()
+            'Console.WriteLine("reader.GetValues retrieved {0} columns.", fieldCount)
+            For i As Integer = 0 To cantidad_campos - 1
+                registro.Add(New KeyValuePair(Of String, Object)(reader.GetName(i), registro_actual(i)))
+                'Console.Write(values(i).ToString + " - ")
+            Next
+            resultados.Add(registro)
+            'Console.WriteLine()
 
-                'Console.WriteLine("VALOR: {0} - {1} - {2}    *** ", reader.GetValue(0), reader.GetValue(1), reader.GetValue(2))
-                'Console.WriteLine("COLUMNA TIPO: {0} ### ", reader.GetOrdinal("Tipo"))
-            Loop
+            'Console.WriteLine("VALOR: {0} - {1} - {2}    *** ", reader.GetValue(0), reader.GetValue(1), reader.GetValue(2))
+            'Console.WriteLine("COLUMNA TIPO: {0} ### ", reader.GetOrdinal("Tipo"))
+        Loop
 
-            mensaje_db = "Se realizo la consulta " + sql + " con exito."
-            ''log.Debug(mensaje_db)
+        mensaje_db = "Se realizo la consulta " + sql + " con exito."
+        ''log.Debug(mensaje_db)
 
-        Catch ex As Exception
-            mensaje_db = "ERROR AL EJECUTAR LA CONSULTA " + sql
-            'MessageBox.Show(mensaje_db)
-            'Log.Error(mensaje_db + " - " + dsn + " - " + ex.Message)
-            If propagar Then
-                Throw ex
-            Else
-                'MessageBox.Show(mensaje_db)
-            End If
-        End Try
+        'Catch ex As Exception
+        '    mensaje_db = "ERROR AL EJECUTAR LA CONSULTA " + sql
+        '    'MessageBox.Show(mensaje_db)
+        '    'Log.Error(mensaje_db + " - " + dsn + " - " + ex.Message)
+        '    If propagar Then
+        '        Throw ex
+        '    Else
+        '        'MessageBox.Show(mensaje_db)
+        '    End If
+        'End Try
     End Sub
 
     Public Sub Desconectar() Implements IBaseDatos.Desconectar
@@ -110,26 +104,26 @@ Public Class BD_SQL
         ''log.Info("Se desconecto " + dsn)
     End Sub
 
-    Public Sub Ejecutar(sql As String, Optional propagar As Boolean = False) Implements IBaseDatos.Ejecutar
+    Public Sub Ejecutar(sql As String) Implements IBaseDatos.Ejecutar
         Dim SP As SqlCommand
-        Try
-            SP = conec.CreateCommand()
-            SP.CommandText = sql
-            reader = SP.ExecuteReader()
+        ' Try
+        SP = conec.CreateCommand()
+        SP.CommandText = sql
+        reader = SP.ExecuteReader()
 
-            mensaje_db = "Se ejecuto la consulta " + sql + " con exito."
-            ''log.Debug(mensaje_db)
-        Catch ex As Exception
-            ' Capturamos la excepción
-            mensaje_db = "ERROR AL EJECUTAR LA CONSULTA " + sql
-            'MessageBox.Show(mensaje_db)
-            'Log.Error(mensaje_db + " - " + dsn + " - " + ex.Message)
-            If propagar Then
-                Throw ex
-            Else
-                'MessageBox.Show(mensaje_db)
-            End If
-        End Try
+        mensaje_db = "Se ejecuto la consulta " + sql + " con exito."
+        ''log.Debug(mensaje_db)
+        'Catch ex As Exception
+        '    ' Capturamos la excepción
+        '    mensaje_db = "ERROR AL EJECUTAR LA CONSULTA " + sql
+        '    'MessageBox.Show(mensaje_db)
+        '    'Log.Error(mensaje_db + " - " + dsn + " - " + ex.Message)
+        '    If propagar Then
+        '        Throw ex
+        '    Else
+        '        'MessageBox.Show(mensaje_db)
+        '    End If
+        'End Try
     End Sub
 
 

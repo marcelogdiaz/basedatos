@@ -8,14 +8,14 @@ Public Interface IBaseDatos
     ''' </summary>
     ''' <param name="valor_dsn">Parametros de conexion</param>
     ''' <remarks></remarks>
-    Sub Conectar(ByVal valor_dsn As String, Servidor As String, Optional propagar As Boolean = False)
+    Sub Conectar(ByVal valor_dsn As String, Servidor As String)
 
     ''' <summary>
     ''' Permite realizar una consulta SQL a la fuente de datos y almacena el resultado en una estructura interna
     ''' </summary>
     ''' <param name="sql">Consulta SQL</param>
     ''' <remarks></remarks>
-    Sub Consultar(ByVal sql As String, Optional tipo As CommandType = CommandType.Text, Optional parametros As List(Of SqlParameter) = Nothing, Optional propagar As Boolean = False)
+    Sub Consultar(ByVal sql As String, Optional tipo As CommandType = CommandType.Text, Optional parametros As List(Of SqlParameter) = Nothing)
 
     ''' <summary>
     ''' Permite desconectarse de la fuente de datos
@@ -28,7 +28,7 @@ Public Interface IBaseDatos
     ''' </summary>
     ''' <param name="sql">Consulta SQL</param>
     ''' <remarks></remarks>
-    Sub Ejecutar(ByVal sql As String, Optional propagar As Boolean = False)
+    Sub Ejecutar(ByVal sql As String)
 
     ''' <summary>
     ''' Permite avanzar una posicion del cursor de la estructura interna de almacenamiento
