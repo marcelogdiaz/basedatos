@@ -15,7 +15,7 @@ Public Interface IBaseDatos
     ''' </summary>
     ''' <param name="sql">Consulta SQL</param>
     ''' <remarks></remarks>
-    Sub Consultar(ByVal sql As String, Optional tipo As CommandType = CommandType.Text, Optional parametros As List(Of SqlParameter) = Nothing)
+    Sub Consultar(ByVal sql As String, Optional tipo As CommandType = CommandType.Text, Optional parametros As List(Of SqlParameter) = Nothing, Optional propagar As Boolean = False)
 
     ''' <summary>
     ''' Permite desconectarse de la fuente de datos
@@ -28,7 +28,7 @@ Public Interface IBaseDatos
     ''' </summary>
     ''' <param name="sql">Consulta SQL</param>
     ''' <remarks></remarks>
-    Sub Ejecutar(ByVal sql As String)
+    Sub Ejecutar(ByVal sql As String, Optional propagar As Boolean = False)
 
     ''' <summary>
     ''' Permite avanzar una posicion del cursor de la estructura interna de almacenamiento

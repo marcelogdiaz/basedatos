@@ -50,7 +50,7 @@ Public Class BD_SQL
         End Try
     End Sub
 
-    Public Sub Consultar(sql As String, Optional tipo As CommandType = CommandType.Text, Optional parametros As List(Of SqlParameter) = Nothing) Implements IBaseDatos.Consultar
+    Public Sub Consultar(sql As String, Optional tipo As CommandType = CommandType.Text, Optional parametros As List(Of SqlParameter) = Nothing, Optional propagar As Boolean = False) Implements IBaseDatos.Consultar
         Dim SP As SqlCommand
 
         'inicializamos la varialble para no retornar valores de otra consulta
@@ -96,6 +96,11 @@ Public Class BD_SQL
             mensaje_db = "ERROR AL EJECUTAR LA CONSULTA " + sql
             'MessageBox.Show(mensaje_db)
             'Log.Error(mensaje_db + " - " + dsn + " - " + ex.Message)
+            If propagar Then
+                Throw ex
+            Else
+                'MessageBox.Show(mensaje_db)
+            End If
         End Try
     End Sub
 
@@ -105,7 +110,7 @@ Public Class BD_SQL
         ''log.Info("Se desconecto " + dsn)
     End Sub
 
-    Public Sub Ejecutar(sql As String) Implements IBaseDatos.Ejecutar
+    Public Sub Ejecutar(sql As String, Optional propagar As Boolean = False) Implements IBaseDatos.Ejecutar
         Dim SP As SqlCommand
         Try
             SP = conec.CreateCommand()
@@ -119,7 +124,11 @@ Public Class BD_SQL
             mensaje_db = "ERROR AL EJECUTAR LA CONSULTA " + sql
             'MessageBox.Show(mensaje_db)
             'Log.Error(mensaje_db + " - " + dsn + " - " + ex.Message)
-            Throw ex
+            If propagar Then
+                Throw ex
+            Else
+                'MessageBox.Show(mensaje_db)
+            End If
         End Try
     End Sub
 
